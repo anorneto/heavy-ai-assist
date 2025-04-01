@@ -10,6 +10,60 @@ from typing import List, Optional, Union
 from pydantic import BaseModel, Field
 
 
+class Type(Enum):
+    warmup = "warmup"
+    normal = "normal"
+    failure = "failure"
+    dropset = "dropset"
+
+
+class Rpe(Enum):
+    number_6 = 6
+    number_7 = 7
+    number_7_5 = 7.5
+    number_8 = 8
+    number_8_5 = 8.5
+    number_9 = 9
+    number_9_5 = 9.5
+    number_10 = 10
+
+
+class PostWorkoutsRequestSet(BaseModel):
+    type: Optional[Type] = Field(
+        None, description="The type of the set.", example="normal"
+    )
+    weight_kg: Optional[float] = Field(
+        None, description="The weight in kilograms.", example=100
+    )
+    reps: Optional[int] = Field(
+        None, description="The number of repetitions.", example=10
+    )
+    distance_meters: Optional[int] = Field(None, description="The distance in meters.")
+    duration_seconds: Optional[int] = Field(
+        None, description="The duration in seconds."
+    )
+    custom_metric: Optional[float] = Field(
+        None,
+        description="A custom metric for the set. Currently used for steps and floors.",
+    )
+    rpe: Optional[Rpe] = Field(
+        None, description="The Rating of Perceived Exertion (RPE)."
+    )
+
+
+class PostWorkoutsRequestExercise(BaseModel):
+    exercise_template_id: Optional[str] = Field(
+        None, description="The ID of the exercise template.", example="D04AC939"
+    )
+    superset_id: Optional[int] = Field(None, description="The ID of the superset.")
+    notes: Optional[str] = Field(
+        None,
+        description="Additional notes for the exercise.",
+        example="Felt good today. Form was on point.",
+    )
+    sets: Optional[List[PostWorkoutsRequestSet]] = None
+
+
 class Workout(BaseModel):
     title: Optional[str] = Field(
         None, description="The title of the workout.", example="Friday Leg Day 🔥"

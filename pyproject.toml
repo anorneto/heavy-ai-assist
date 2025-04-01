@@ -5,10 +5,13 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "datamodel-code-generator>=0.28.5",
+    "agno>=1.2.6",
     "orjson>=3.10.16",
     "pydantic>=2.11.1",
     "pydantic-settings>=2.8.1",
     "setuptools>=78.1.0",
     "uplink>=0.9.7",
 ]
+
+[dependency-groups]
+dev = ["datamodel-code-generator>=0.28.5", "ruff>=0.11.2"]
